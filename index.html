@@ -1,316 +1,343 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Haven - A programming community where we learn and grow together">
-    <title>Haven - Programming Community</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/responsive.css">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32">
-                    <use href="assets/icons.svg#logo"></use>
-                </svg>
-                <span class="logo-text">Haven</span>
-            </div>
-            
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#features" class="nav-link">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#learning" class="nav-link">Learning</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#growth" class="nav-link">Growth</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
-                </li>
-            </ul>
-            
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Welcome to <span class="text-accent">Haven</span>
-                </h1>
-                <p class="hero-subtitle">
-                    A programming community where we learn, grow, and build amazing things together.
-                    Join developers from around the world in our journey of continuous improvement.
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary">Join Community</button>
-                    <button class="btn btn-secondary">Learn More</button>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="code-animation">
-                    <div class="code-line">
-                        <span class="code-keyword">function</span>
-                        <span class="code-function">buildCommunity</span>() {
-                    </div>
-                    <div class="code-line">
-                        &nbsp;&nbsp;<span class="code-keyword">return</span>
-                        <span class="code-string">'success'</span>;
-                    </div>
-                    <div class="code-line">}</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Community Features</h2>
-                <p class="section-subtitle">
-                    Discover what makes Haven the perfect place for developers to thrive
-                </p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48">
-                            <use href="assets/icons.svg#collaboration"></use>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Collaborative Learning</h3>
-                    <p class="feature-description">
-                        Work together on projects, share knowledge, and learn from experienced developers in our supportive community.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48">
-                            <use href="assets/icons.svg#mentorship"></use>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Expert Mentorship</h3>
-                    <p class="feature-description">
-                        Get guidance from industry professionals who are passionate about helping others grow in their programming journey.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48">
-                            <use href="assets/icons.svg#projects"></use>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Real Projects</h3>
-                    <p class="feature-description">
-                        Build portfolio-worthy projects that solve real problems and showcase your skills to potential employers.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48">
-                            <use href="assets/icons.svg#networking"></use>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Professional Network</h3>
-                    <p class="feature-description">
-                        Connect with like-minded developers, find collaboration opportunities, and build lasting professional relationships.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Learning Section -->
-    <section id="learning" class="learning">
-        <div class="container">
-            <div class="learning-content">
-                <div class="learning-text">
-                    <h2 class="section-title">Learning Resources</h2>
-                    <p class="section-description">
-                        Access a comprehensive library of learning materials designed to accelerate your programming journey.
-                    </p>
-                    
-                    <div class="learning-list">
-                        <div class="learning-item">
-                            <svg class="learning-icon" width="24" height="24" viewBox="0 0 24 24">
-                                <use href="assets/icons.svg#check"></use>
-                            </svg>
-                            <span>Interactive coding challenges and exercises</span>
-                        </div>
-                        <div class="learning-item">
-                            <svg class="learning-icon" width="24" height="24" viewBox="0 0 24 24">
-                                <use href="assets/icons.svg#check"></use>
-                            </svg>
-                            <span>Video tutorials from industry experts</span>
-                        </div>
-                        <div class="learning-item">
-                            <svg class="learning-icon" width="24" height="24" viewBox="0 0 24 24">
-                                <use href="assets/icons.svg#check"></use>
-                            </svg>
-                            <span>Code review sessions and feedback</span>
-                        </div>
-                        <div class="learning-item">
-                            <svg class="learning-icon" width="24" height="24" viewBox="0 0 24 24">
-                                <use href="assets/icons.svg#check"></use>
-                            </svg>
-                            <span>Weekly programming workshops</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary">Explore Resources</button>
-                </div>
-                
-                <div class="learning-visual">
-                    <div class="learning-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Learning Resources</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">50+</div>
-                            <div class="stat-label">Expert Mentors</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">1000+</div>
-                            <div class="stat-label">Active Members</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Growth Section -->
-    <section id="growth" class="growth">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Growth Opportunities</h2>
-                <p class="section-subtitle">
-                    Take your programming career to the next level with our growth-focused initiatives
-                </p>
-            </div>
-            
-            <div class="growth-grid">
-                <div class="growth-card">
-                    <div class="growth-number">01</div>
-                    <h3 class="growth-title">Skill Development</h3>
-                    <p class="growth-description">
-                        Structured learning paths to master new technologies and programming languages at your own pace.
-                    </p>
-                </div>
-                
-                <div class="growth-card">
-                    <div class="growth-number">02</div>
-                    <h3 class="growth-title">Career Guidance</h3>
-                    <p class="growth-description">
-                        Get advice on career transitions, interview preparation, and building a standout developer portfolio.
-                    </p>
-                </div>
-                
-                <div class="growth-card">
-                    <div class="growth-number">03</div>
-                    <h3 class="growth-title">Open Source</h3>
-                    <p class="growth-description">
-                        Contribute to meaningful open source projects and gain experience working with distributed teams.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h2 class="section-title">Join Our Community</h2>
-                    <p class="section-description">
-                        Ready to start your journey with Haven? Connect with us and become part of our growing programming community.
-                    </p>
-                    
-                    <div class="contact-methods">
-                        <div class="contact-method">
-                            <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24">
-                                <use href="assets/icons.svg#email"></use>
-                            </svg>
-                            <span>hello@haven-community.dev</span>
-                        </div>
-                        <div class="contact-method">
-                            <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24">
-                                <use href="assets/icons.svg#discord"></use>
-                            </svg>
-                            <span>Join our Discord server</span>
-                        </div>
-                        <div class="contact-method">
-                            <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24">
-                                <use href="assets/icons.svg#github"></use>
-                            </svg>
-                            <span>Follow us on GitHub</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <form class="form" id="contact-form">
-                        <div class="form-group">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" id="name" name="name" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="email" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea id="message" name="message" class="form-textarea" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Haven - A programming community where we learn and grow together"
+        />
+        <title>Haven</title>
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/components.css" />
+        <link rel="stylesheet" href="css/responsive.css" />
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <svg
+                        class="logo-icon"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                    >
                         <use href="assets/icons.svg#logo"></use>
                     </svg>
                     <span class="logo-text">Haven</span>
                 </div>
-                <p class="footer-text">
-                    Building the future of programming education, one developer at a time.
-                </p>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Haven Programming Community. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
-    <script src="js/main.js"></script>
-</body>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#features" class="nav-link">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#learning" class="nav-link">Learning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#growth" class="nav-link">Growth</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Welcome to <span class="text-accent">Haven</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        A programming community where we learn, grow, and build
+                        amazing things together. Join developers from around guinea                         in our journey of continuous improvement.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Hi%20I%20would%20like%20to%20join%20the%20Haven%20programming%20community" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Join Community</a>
+                        <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Hi%20I%20would%20like%20to%20learn%20more%20about%20Haven%20programming%20community" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="code-animation">
+                        <div class="code-line">
+                            <span class="code-keyword">function</span>
+                            <span class="code-function">buildCommunity</span>()
+                            {
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;<span class="code-keyword">return</span>
+                            <span class="code-string">'success'</span>;
+                        </div>
+                        <div class="code-line">}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Community Features</h2>
+                    <p class="section-subtitle">
+                        Discover what makes Haven the perfect place for
+                        developers to thrive
+                    </p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48">
+                                <use
+                                    href="assets/icons.svg#collaboration"
+                                ></use>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Collaborative Learning</h3>
+                        <p class="feature-description">
+                            Work together on projects, share knowledge, and
+                            learn from experienced developers in our supportive
+                            community.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48">
+                                <use href="assets/icons.svg#mentorship"></use>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Expert Mentorship</h3>
+                        <p class="feature-description">
+                            Get guidance from industry professionals who are
+                            passionate about helping others grow in their
+                            programming journey.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48">
+                                <use href="assets/icons.svg#projects"></use>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Real Projects</h3>
+                        <p class="feature-description">
+                            Build portfolio-worthy projects that solve real
+                            problems and showcase your skills to potential
+                            employers.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48">
+                                <use href="assets/icons.svg#networking"></use>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Professional Network</h3>
+                        <p class="feature-description">
+                            Connect with like-minded developers, find
+                            collaboration opportunities, and build lasting
+                            professional relationships.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Section -->
+        <section id="learning" class="learning">
+            <div class="container">
+                <div class="learning-content">
+                    <div class="learning-text">
+                        <h2 class="section-title">Learning Resources</h2>
+                        <p class="section-description">
+                            Access a comprehensive library of learning materials
+                            designed to accelerate your programming journey.
+                        </p>
+
+                        <div class="learning-list">
+                            <div class="learning-item">
+                                <svg
+                                    class="learning-icon"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <use href="assets/icons.svg#check"></use>
+                                </svg>
+                                <span
+                                    >Interactive coding challenges and
+                                    exercises</span
+                                >
+                            </div>
+                            <div class="learning-item">
+                                <svg
+                                    class="learning-icon"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <use href="assets/icons.svg#check"></use>
+                                </svg>
+                                <span>Code review sessions and feedback</span>
+                            </div>
+                            <div class="learning-item">
+                                <svg
+                                    class="learning-icon"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <use href="assets/icons.svg#check"></use>
+                                </svg>
+                                <span>Weekly programming workshops</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Growth Section -->
+        <section id="growth" class="growth">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Growth Opportunities</h2>
+                    <p class="section-subtitle">
+                        Take your programming career to the next level with our
+                        growth-focused initiatives
+                    </p>
+                </div>
+
+                <div class="growth-grid">
+                    <div class="growth-card">
+                        <div class="growth-number">01</div>
+                        <h3 class="growth-title">Skill Development</h3>
+                        <p class="growth-description">
+                            Structured learning paths to master new technologies
+                            and programming languages at your own pace.
+                        </p>
+                    </div>
+
+                    <div class="growth-card">
+                        <div class="growth-number">02</div>
+                        <h3 class="growth-title">Career Guidance</h3>
+                        <p class="growth-description">
+                            Get advice on career transitions, interview
+                            preparation, and building a standout developer
+                            portfolio.
+                        </p>
+                    </div>
+
+                    <div class="growth-card">
+                        <div class="growth-number">03</div>
+                        <h3 class="growth-title">Open Source</h3>
+                        <p class="growth-description">
+                            Contribute to meaningful open source projects and
+                            gain experience working with distributed teams.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2 class="section-title">Join Our Community</h2>
+                        <p class="section-description">
+                            Ready to start your journey with Haven? Connect with
+                            us and become part of our growing programming
+                            community.
+                        </p>
+
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <svg
+                                    class="contact-icon"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <use href="assets/icons.svg#email"></use>
+                                </svg>
+                                <span>hello@haven-community.dev</span>
+                            </div>
+                            <div class="contact-method">
+                                <svg
+                                    class="contact-icon"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <use href="assets/icons.svg#discord"></use>
+                                </svg>
+                                <span>Join our Discord server</span>
+                            </div>
+                            <div class="contact-method">
+                                <svg
+                                    class="contact-icon"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <use href="assets/icons.svg#github"></use>
+                                </svg>
+                                <span>Follow us on GitHub</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <svg
+                            class="logo-icon"
+                            width="32"
+                            height="32"
+                            viewBox="0 0 32 32"
+                        >
+                            <use href="assets/icons.svg#logo"></use>
+                        </svg>
+                        <span class="logo-text">Haven</span>
+                    </div>
+                    <p class="footer-text">
+                        Building the future of programming education, one
+                        developer at a time.
+                    </p>
+                </div>
+                <div class="footer-bottom">
+                    <p>
+                        &copy; 2025 Haven Programming Community. All rights
+                        reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="js/main.js"></script>
+    </body>
 </html>
