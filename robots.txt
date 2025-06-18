@@ -3,12 +3,25 @@ Allow: /
 Allow: /css/
 Allow: /js/
 Allow: /assets/
+Allow: /security-dashboard.html
 
 Disallow: /.htaccess
 Disallow: /.*
+Disallow: /admin/
+Disallow: /private/
+
+# Specific bot instructions
+User-agent: Googlebot
+Crawl-delay: 1
+
+User-agent: Bingbot
+Crawl-delay: 2
+
+User-agent: facebookexternalhit
+Allow: /
 
 # Sitemap
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://haven-community.dev/sitemap.xml
 
 # Crawl delay
 Crawl-delay: 1
