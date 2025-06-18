@@ -323,9 +323,19 @@
      */
     if ('performance' in window) {
         window.addEventListener('load', function() {
-            const perfData = performance.timing;
-            const loadTime = perfData.loadEventEnd - perfData.navigationStart;
-            console.log(`Page load time: ${loadTime}ms`);
+            // Use modern Performance API
+            if (performance.getEntriesByType) {
+                const navigationEntries = performance.getEntriesByType('navigation');
+                if (navigationEntries.length > 0) {
+                    const loadTime = navigationEntries[0].loadEventEnd - navigationEntries[0].fetchStart;
+                    console.log(`Page load time: ${Math.round(loadTime)}ms`);
+                }
+            } else {
+                // Fallback for older browsers
+                const perfData = performance.timing;
+                const loadTime = perfData.loadEventEnd - perfData.navigationStart;
+                console.log(`Page load time: ${loadTime}ms`);
+            }
         });
     }
 
