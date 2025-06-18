@@ -1,7 +1,16 @@
 Contact: mailto:security@haven-community.dev
+Contact: https://github.com/haven-community/security/issues
 Expires: 2025-12-31T23:59:59.000Z
-Encryption: https://keys.openpgp.org/vks/v1/by-fingerprint/YOUR_PGP_KEY
-Preferred-Languages: en
-Canonical: https://yourdomain.com/.well-known/security.txt
-Policy: https://yourdomain.com/security-policy
-Acknowledgments: https://yourdomain.com/security-acknowledgments
+Encryption: https://keys.openpgp.org/vks/v1/by-fingerprint/PLACEHOLDER_PGP_KEY
+Preferred-Languages: en, fr
+Canonical: https://haven-community.dev/.well-known/security.txt
+Policy: https://haven-community.dev/security-policy
+Acknowledgments: https://haven-community.dev/security-acknowledgments
+Hiring: https://haven-community.dev/careers
+
+# Security Policy
+# Report security vulnerabilities responsibly
+# Include detailed reproduction steps
+# Allow reasonable time for fixes before disclosure
+# Scope: Web application security, data protection, infrastructure
+# Out of scope: Social engineering, physical security, spam/DoS

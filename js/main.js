@@ -47,6 +47,13 @@
      * Initialize security measures
      */
     function initializeSecurity() {
+        // Enhanced security initialization
+        initializeCSPViolationReporting();
+        initializeIntegrityChecking();
+        initializeTamperDetection();
+        initializeSecureNavigation();
+        initializeContentProtection();
+        
         // Prevent right-click context menu in production
         if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
             document.addEventListener('contextmenu', function(e) {
@@ -70,29 +77,227 @@
             if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
                 if (e.key === 'F12' || 
                     (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                    (e.ctrlKey && e.key === 'U')) {
+                    (e.ctrlKey && e.key === 'U') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'J')) {
                     e.preventDefault();
                     suspiciousActivity++;
                     if (suspiciousActivity > 3) {
                         console.warn('Security: Multiple attempts to access developer tools detected');
+                        logSecurityEvent('dev_tools_attempts', { count: suspiciousActivity });
                     }
                     return false;
                 }
             }
         });
         
-        // Security: Validate external links
-        const externalLinks = document.querySelectorAll('a[href^="https://wa.me"]');
+        // Security: Validate all external links
+        const externalLinks = document.querySelectorAll('a[href^="http"]');
         externalLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                if (!href.startsWith('https://wa.me/')) {
+                if (!isValidExternalLink(href)) {
                     e.preventDefault();
-                    console.error('Security: Invalid WhatsApp link detected');
+                    console.error('Security: Invalid external link detected');
+                    logSecurityEvent('invalid_link', { href });
                     return false;
                 }
             });
         });
+    }
+    
+    /**
+     * CSP Violation Reporting
+     */
+    function initializeCSPViolationReporting() {
+        document.addEventListener('securitypolicyviolation', function(e) {
+            console.error('CSP Violation:', {
+                blockedURI: e.blockedURI,
+                violatedDirective: e.violatedDirective,
+                originalPolicy: e.originalPolicy
+            });
+            logSecurityEvent('csp_violation', {
+                blockedURI: e.blockedURI,
+                directive: e.violatedDirective
+            });
+        });
+    }
+    
+    /**
+     * DOM Integrity Checking
+     */
+    function initializeIntegrityChecking() {
+        const originalScripts = document.querySelectorAll('script').length;
+        const originalStyles = document.querySelectorAll('style, link[rel="stylesheet"]').length;
+        
+        setInterval(function() {
+            const currentScripts = document.querySelectorAll('script').length;
+            const currentStyles = document.querySelectorAll('style, link[rel="stylesheet"]').length;
+            
+            if (currentScripts > originalScripts || currentStyles > originalStyles) {
+                console.warn('Security: Potential DOM tampering detected');
+                logSecurityEvent('dom_tampering', {
+                    scripts: { original: originalScripts, current: currentScripts },
+                    styles: { original: originalStyles, current: currentStyles }
+                });
+            }
+        }, 5000);
+    }
+    
+    /**
+     * Anti-Tampering Protection
+     */
+    function initializeTamperDetection() {
+        // Protect critical functions
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        Object.defineProperty(console, 'log', {
+            value: function(...args) {
+                if (args.length > 0 && typeof args[0] === 'string' && args[0].includes('Security:')) {
+                    originalLog.apply(console, args);
+                }
+            },
+            writable: false,
+            configurable: false
+        });
+        
+        // Monitor for script injection attempts
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === 1 && (node.tagName === 'SCRIPT' || node.tagName === 'IFRAME')) {
+                            console.warn('Security: Suspicious element injection detected');
+                            logSecurityEvent('element_injection', { 
+                                tagName: node.tagName,
+                                src: node.src || node.innerHTML.substring(0, 100)
+                            });
+                        }
+                    });
+                }
+            });
+        });
+        
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+    
+    /**
+     * Secure Navigation Protection
+     */
+    function initializeSecureNavigation() {
+        // Prevent navigation to suspicious URLs
+        window.addEventListener('beforeunload', function(e) {
+            // Allow normal navigation, but log it
+            logSecurityEvent('navigation_attempt', { 
+                from: window.location.href,
+                timestamp: new Date().toISOString()
+            });
+        });
+        
+        // Monitor hash changes for potential attacks
+        window.addEventListener('hashchange', function(e) {
+            const newHash = window.location.hash;
+            if (newHash.includes('<script') || newHash.includes('javascript:')) {
+                console.warn('Security: Suspicious hash change detected');
+                logSecurityEvent('suspicious_hash', { hash: newHash });
+                window.location.hash = '';
+            }
+        });
+    }
+    
+    /**
+     * Content Protection
+     */
+    function initializeContentProtection() {
+        // Disable drag and drop of external content
+        document.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+            console.warn('Security: External content drop prevented');
+            logSecurityEvent('content_drop_prevented', {});
+        });
+        
+        // Disable paste of potentially malicious content
+        document.addEventListener('paste', function(e) {
+            const pastedData = e.clipboardData.getData('text');
+            if (pastedData.includes('<script') || pastedData.includes('javascript:')) {
+                e.preventDefault();
+                console.warn('Security: Malicious paste content blocked');
+                logSecurityEvent('malicious_paste_blocked', { 
+                    content: pastedData.substring(0, 100)
+                });
+            }
+        });
+    }
+    
+    /**
+     * Validate external links
+     */
+    function isValidExternalLink(href) {
+        if (!href) return false;
+        
+        const allowedDomains = [
+            'wa.me',
+            'whatsapp.com',
+            'github.com',
+            'discord.com',
+            'discord.gg'
+        ];
+        
+        try {
+            const url = new URL(href);
+            return allowedDomains.some(domain => 
+                url.hostname === domain || url.hostname.endsWith('.' + domain)
+            );
+        } catch (e) {
+            return false;
+        }
+    }
+    
+    /**
+     * Security Event Logging
+     */
+    function logSecurityEvent(eventType, details) {
+        const securityLog = {
+            timestamp: new Date().toISOString(),
+            event: eventType,
+            details: details,
+            userAgent: navigator.userAgent,
+            url: window.location.href,
+            sessionId: generateSessionId()
+        };
+        
+        // Store in sessionStorage for this session
+        const existingLogs = JSON.parse(sessionStorage.getItem('securityLogs') || '[]');
+        existingLogs.push(securityLog);
+        
+        // Keep only last 50 events
+        if (existingLogs.length > 50) {
+            existingLogs.splice(0, existingLogs.length - 50);
+        }
+        
+        sessionStorage.setItem('securityLogs', JSON.stringify(existingLogs));
+        
+        // In production, you could send this to a security monitoring service
+        console.info('Security Event Logged:', eventType, details);
+    }
+    
+    /**
+     * Generate session ID for security tracking
+     */
+    function generateSessionId() {
+        return sessionStorage.getItem('securitySessionId') || 
+               (function() {
+                   const id = 'sec_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+                   sessionStorage.setItem('securitySessionId', id);
+                   return id;
+               })();
     }
 
     /**

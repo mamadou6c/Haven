@@ -1,55 +1,85 @@
-# Security Headers
+# Apache Security Configuration for Haven Programming Community
+# Modern security headers and protections
+
 <IfModule mod_headers.c>
-    # X-Frame-Options to prevent clickjacking
+    # Security Headers
     Header always set X-Frame-Options "SAMEORIGIN"
-    
-    # X-Content-Type-Options to prevent MIME type sniffing
     Header always set X-Content-Type-Options "nosniff"
-    
-    # X-XSS-Protection for older browsers
     Header always set X-XSS-Protection "1; mode=block"
-    
-    # Referrer Policy
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    
-    # Permissions Policy
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=(), vibrate=(), fullscreen=(self), sync-xhr=()"
+    Header always set X-Permitted-Cross-Domain-Policies "none"
     
     # Content Security Policy
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://wa.me; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'nonce-script'; style-src 'self' 'unsafe-inline' 'nonce-style'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; media-src 'self'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests; report-uri /csp-report"
     
-    # Strict Transport Security (HSTS)
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    # HSTS (HTTP Strict Transport Security)
+    Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+    
+    # Permissions Policy (Feature Policy)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=(), vibrate=(), fullscreen=(self), sync-xhr=(), autoplay=(), encrypted-media=(), picture-in-picture=()"
+    
+    # Cross-Origin Policies
+    Header always set Cross-Origin-Embedder-Policy "require-corp"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Resource-Policy "same-origin"
+    
+    # Certificate Transparency
+    Header always set Expect-CT "max-age=86400, enforce"
+    
+    # Cache Control for Static Assets
+    <FilesMatch "\.(css|js|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # No-cache for HTML files
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
 </IfModule>
 
 # Disable server signature
+ServerTokens Prod
 ServerSignature Off
 
-# Hide Apache version
-<IfModule mod_security.c>
-    SecServerSignature Off
-</IfModule>
-
 # Prevent access to sensitive files
-<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|env)$">
-    Order Allow,Deny
-    Deny from all
+<FilesMatch "^(\.htaccess|\.htpasswd|\.env|\.git|package\.json|composer\.json|yarn\.lock|package-lock\.json)">
+    Require all denied
 </FilesMatch>
 
-# Prevent access to hidden files
-<FilesMatch "^\.">
-    Order Allow,Deny
-    Deny from all
+# Prevent access to backup and temporary files
+<FilesMatch "\.(bak|backup|swp|tmp|temp)$">
+    Require all denied
 </FilesMatch>
+
+# Security.txt redirect
+RewriteEngine On
+RewriteRule ^\.well-known/security\.txt$ /security.txt [R=301,L]
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent hotlinking
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https?://([^.]+\.)?yourdomain\.com [NC]
+RewriteCond %{REQUEST_URI} \.(jpe?g|png|gif|svg|css|js)$ [NC]
+RewriteRule \.(jpe?g|png|gif|svg|css|js)$ - [F]
 
 # Block suspicious user agents
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{HTTP_USER_AGENT} (nmap|nikto|wikto|sf|sqlmap|bsqlbf|w3af|acunetix|havij|appscan) [NC]
-    RewriteRule .* - [F]
-</IfModule>
+RewriteCond %{HTTP_USER_AGENT} (nikto|sqlmap|fimap|nessus|openvas|nmap|masscan) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} (<|>|%0A|%0D|%27|%3C|%3E|%00) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} (;|<|>|'|"|\)|\(|%0A|%0D|%22|%27|%28|%3C|%3E|%00).*(libwww-perl|wget|python|nikto|curl|scan|java|winhttp|clshttp|loader) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} (\.\./|\.\.\%2F|\%2E\%2E\%2F|\.\.\\/|etc/passwd|boot\.ini) [NC]
+RewriteRule .* - [F,L]
 
-# Enable compression for better performance
+# Block common attack patterns
+RewriteCond %{QUERY_STRING} (;|<|>|'|"|\)|%0A|%0D|%22|%27|%3C|%3E|%00) [NC,OR]
+RewriteCond %{QUERY_STRING} (javascript:|vbscript:|onload|onerror|onclick) [NC,OR]
+RewriteCond %{QUERY_STRING} (select|union|insert|drop|delete|update|cast|create|char|concat|alter|declare|exec) [NC]
+RewriteRule .* - [F,L]
+
+# Enable compression
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/plain
     AddOutputFilterByType DEFLATE text/html
@@ -61,23 +91,4 @@ ServerSignature Off
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/x-javascript
     AddOutputFilterByType DEFLATE image/svg+xml
-</IfModule>
-
-# Cache static assets
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/css "access plus 1 year"
-    ExpiresByType application/javascript "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpg "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType text/html "access plus 1 hour"
-</IfModule>
-
-# Set proper MIME types
-<IfModule mod_mime.c>
-    AddType application/javascript .js
-    AddType text/css .css
-    AddType image/svg+xml .svg
 </IfModule>
