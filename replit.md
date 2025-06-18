@@ -98,6 +98,7 @@ Haven is a static landing page for a programming community focused on learning a
 ```
 Changelog:
 - June 18, 2025. Initial setup
+- June 18, 2025. Updated structure - removed learning stats section, contact form, and simplified layout to single-column design for learning and contact sections
 ```
 
 ## User Preferences
