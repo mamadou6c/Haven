@@ -1,3 +1,29 @@
+/* Security Classes */
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Animation Classes */
+.animate-prepare {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Navbar Scroll Effects */
+.navbar.scrolled {
+    background-color: rgba(15, 23, 42, 0.98) !important;
+    backdrop-filter: blur(10px);
+}
+
 /* Button Components */
 .btn {
     display: inline-flex;

@@ -1,0 +1,111 @@
+/* Security Dashboard Styles */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    background: #0f172a; 
+    color: #e2e8f0; 
+}
+
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 20px; 
+}
+
+.header { 
+    text-align: center; 
+    margin-bottom: 30px; 
+}
+
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px; 
+    margin-bottom: 30px; 
+}
+
+.stat-card { 
+    background: #1e293b; 
+    border-radius: 8px; 
+    padding: 20px; 
+    border-left: 4px solid #10b981; 
+}
+
+.stat-value { 
+    font-size: 2rem; 
+    font-weight: bold; 
+    color: #10b981; 
+}
+
+.stat-label { 
+    color: #94a3b8; 
+    margin-top: 5px; 
+}
+
+.logs-section { 
+    background: #1e293b; 
+    border-radius: 8px; 
+    padding: 20px; 
+}
+
+.log-entry { 
+    background: #334155; 
+    margin: 10px 0; 
+    padding: 15px; 
+    border-radius: 6px; 
+    border-left: 3px solid #ef4444; 
+}
+
+.log-entry.warning { 
+    border-left-color: #f59e0b; 
+}
+
+.log-entry.info { 
+    border-left-color: #3b82f6; 
+}
+
+.log-timestamp { 
+    color: #94a3b8; 
+    font-size: 0.9rem; 
+}
+
+.log-message { 
+    margin-top: 5px; 
+}
+
+.controls { 
+    margin-bottom: 20px; 
+}
+
+.btn { 
+    background: #10b981; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    margin-right: 10px; 
+}
+
+.btn:hover { 
+    background: #059669; 
+}
+
+.alert { 
+    background: #dc2626; 
+    color: white; 
+    padding: 15px; 
+    border-radius: 6px; 
+    margin-bottom: 20px; 
+}
+
+.no-events {
+    color: #94a3b8; 
+    text-align: center; 
+    padding: 20px;
+}

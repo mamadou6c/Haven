@@ -4,26 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Dashboard - Haven</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: #1e293b; border-radius: 8px; padding: 20px; border-left: 4px solid #10b981; }
-        .stat-value { font-size: 2rem; font-weight: bold; color: #10b981; }
-        .stat-label { color: #94a3b8; margin-top: 5px; }
-        .logs-section { background: #1e293b; border-radius: 8px; padding: 20px; }
-        .log-entry { background: #334155; margin: 10px 0; padding: 15px; border-radius: 6px; border-left: 3px solid #ef4444; }
-        .log-entry.warning { border-left-color: #f59e0b; }
-        .log-entry.info { border-left-color: #3b82f6; }
-        .log-timestamp { color: #94a3b8; font-size: 0.9rem; }
-        .log-message { margin-top: 5px; }
-        .controls { margin-bottom: 20px; }
-        .btn { background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-right: 10px; }
-        .btn:hover { background: #059669; }
-        .alert { background: #dc2626; color: white; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
-    </style>
+    <link rel="stylesheet" href="css/security-dashboard.css">
 </head>
 <body>
     <div class="container">
@@ -62,105 +43,11 @@
         <div class="logs-section">
             <h2>Security Event Logs</h2>
             <div id="logs-container">
-                <p style="color: #94a3b8; text-align: center; padding: 20px;">No security events logged yet</p>
+                <p class="no-events">No security events logged yet</p>
             </div>
         </div>
     </div>
 
-    <script>
-        let sessionStart = Date.now();
-        
-        function refreshData() {
-            const logs = JSON.parse(sessionStorage.getItem('securityLogs') || '[]');
-            updateStats(logs);
-            displayLogs(logs);
-        }
-
-        function updateStats(logs) {
-            document.getElementById('total-events').textContent = logs.length;
-            document.getElementById('violations').textContent = logs.filter(l => l.event === 'csp_violation').length;
-            document.getElementById('blocked-attempts').textContent = logs.filter(l => l.event.includes('blocked') || l.event.includes('prevented')).length;
-            
-            const sessionMinutes = Math.floor((Date.now() - sessionStart) / 60000);
-            document.getElementById('session-time').textContent = sessionMinutes + 'm';
-        }
-
-        function displayLogs(logs) {
-            const container = document.getElementById('logs-container');
-            
-            if (logs.length === 0) {
-                container.innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 20px;">No security events logged yet</p>';
-                return;
-            }
-
-            container.innerHTML = logs.slice(-20).reverse().map(log => {
-                const severity = getSeverity(log.event);
-                return `
-                    <div class="log-entry ${severity}">
-                        <div class="log-timestamp">${new Date(log.timestamp).toLocaleString()}</div>
-                        <div class="log-message">
-                            <strong>${log.event.replace(/_/g, ' ').toUpperCase()}</strong>
-                            ${log.details ? ': ' + JSON.stringify(log.details) : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function getSeverity(event) {
-            if (event.includes('violation') || event.includes('tampering') || event.includes('injection')) {
-                return 'error';
-            }
-            if (event.includes('blocked') || event.includes('prevented') || event.includes('suspicious')) {
-                return 'warning';
-            }
-            return 'info';
-        }
-
-        function clearLogs() {
-            if (confirm('Are you sure you want to clear all security logs?')) {
-                sessionStorage.removeItem('securityLogs');
-                refreshData();
-            }
-        }
-
-        function exportLogs() {
-            const logs = JSON.parse(sessionStorage.getItem('securityLogs') || '[]');
-            const dataStr = JSON.stringify(logs, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `security-logs-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function checkForAlerts() {
-            const logs = JSON.parse(sessionStorage.getItem('securityLogs') || '[]');
-            const recentLogs = logs.filter(l => Date.now() - new Date(l.timestamp).getTime() < 300000); // Last 5 minutes
-            
-            const alertsContainer = document.getElementById('alerts');
-            alertsContainer.innerHTML = '';
-
-            if (recentLogs.filter(l => l.event === 'csp_violation').length > 3) {
-                alertsContainer.innerHTML += '<div class="alert">High number of CSP violations detected in the last 5 minutes</div>';
-            }
-
-            if (recentLogs.filter(l => l.event === 'dev_tools_attempts').length > 0) {
-                alertsContainer.innerHTML += '<div class="alert">Developer tools access attempts detected</div>';
-            }
-        }
-
-        // Auto-refresh every 5 seconds
-        setInterval(() => {
-            refreshData();
-            checkForAlerts();
-        }, 5000);
-
-        // Initial load
-        refreshData();
-        checkForAlerts();
-    </script>
+    <script src="js/security-dashboard.js"></script>
 </body>
 </html>

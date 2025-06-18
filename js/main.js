@@ -65,9 +65,7 @@
         // Prevent text selection on non-content elements
         const nonSelectableElements = document.querySelectorAll('.navbar, .btn, .nav-toggle');
         nonSelectableElements.forEach(el => {
-            el.style.userSelect = 'none';
-            el.style.webkitUserSelect = 'none';
-            el.style.mozUserSelect = 'none';
+            el.classList.add('no-select');
         });
         
         // Security: Monitor for suspicious activity
@@ -426,21 +424,9 @@
         // Observe elements for animation
         const animatedElements = document.querySelectorAll('.feature-card, .growth-card, .learning-item');
         animatedElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            el.classList.add('animate-prepare');
             observer.observe(el);
         });
-        
-        // Add CSS for animation
-        const style = document.createElement('style');
-        style.textContent = `
-            .animate-in {
-                opacity: 1 !important;
-                transform: translateY(0) !important;
-            }
-        `;
-        document.head.appendChild(style);
     }
 
     /**
@@ -476,11 +462,9 @@
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
         if (scrollTop > 50) {
-            navbar.style.backgroundColor = 'rgba(15, 23, 42, 0.98)';
-            navbar.style.backdropFilter = 'blur(10px)';
+            navbar.classList.add('scrolled');
         } else {
-            navbar.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
-            navbar.style.backdropFilter = 'blur(10px)';
+            navbar.classList.remove('scrolled');
         }
     }
 
